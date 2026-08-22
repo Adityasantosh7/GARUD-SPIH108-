@@ -1,109 +1,86 @@
-# 🏆 SPORTSPHERE — Round 3 Hackathon Submission
+# 🏆 SPORTSPHERE
 
 > **One Platform. Every Sport. Every Athlete.**  
-> **Team:** GARUD  
-> **Submission:** Round 3 Hackathon Landing Page, Social Auth & Athlete Profile Dashboard
+> A unified multi-sport discovery and game coordination platform connecting athletes, teams, and local matches.
 
 ---
 
-## 📌 1. The Problem
+## 📌 1. The Core Problem
 
-Athletes today are scattered across isolated single-sport apps, noisy and unsearchable WhatsApp groups, and closed personal networks. 
+Athletes are scattered across isolated single-sport apps, unorganized chat groups, and closed personal networks. 
 
-- A cricket player relies on informal chats to fill match squads.
-- A badminton player struggles to find nearby sparring partners at their exact skill rating.
-- Runners and swimmers train in isolation without knowing compatible local pace groups.
-- Emerging grassroots sports talent remains undiscovered simply because the right digital network does not exist.
+Because of this fragmentation, people struggle to:
+- Find suitable players nearby at compatible skill levels
+- Discover active local games and open pickup matches
+- Fill open spots to prevent games from cancelling last-minute
+- Coordinate venue, date, and timing without endless messaging
+- **Turn their intention to play into an actual game**
 
-This fragmentation creates high friction: **finding teammates, joining pickup games, or discovering local sporting events depends heavily on existing contacts rather than accessible discovery.**
-
----
-
-## 💡 2. The Solution: SportSphere
-
-**SportSphere** is a multi-sport digital ecosystem designed to unify athletes, teams, and events into a single, seamless platform.
-
-Rather than forcing every sport into rigid generic templates or building isolated apps for each discipline, SportSphere uses a **flexible athlete identity model**:
-
-$$\text{Universal Athlete Baseline (Name, Location, Sport, Skill)} + \text{Sport-Specific Adaptive Attributes}$$
-
-### The 4-Step Athlete Journey:
-$$\text{PROFILE} \longrightarrow \text{DISCOVER} \longrightarrow \text{CONNECT} \longrightarrow \text{PARTICIPATE}$$
-
-1. **01 — Create Profile:** Define your sport, skill level, location, and sport-specific attributes (e.g. Cricket batting style, Swimming 50m PB, Chess Elo).
-2. **02 — Discover:** Real-time localized radius search for athletes, teams, and community pickup events.
-3. **03 — Connect:** Direct, frictionless outreach to verified players looking for partners.
-4. **04 — Participate:** Show up to local practice sessions, turf friendlies, and weekend tournaments.
+**SportSphere** solves this by unifying sports discovery into one platform:
+$$\text{Want to Play} \longrightarrow \text{Find Compatible Players & Games} \longrightarrow \text{Join Game} \longrightarrow \text{Actually Play}$$
 
 ---
 
-## ✨ 3. Key Features
+## 💡 2. Primary MVP Flows
 
-- 🔐 **Multi-Platform Authentication:** One-click login with **Google**, **Apple ID**, or custom **Email Athlete Registration**.
-- 👤 **Dedicated Athlete Profile Dashboard:** Full athlete identity manager with reliability scores, match counts, multi-sport cross-training badges, and joined events tracker.
-- ✏️ **Live Sport Identity Editor:** Real-time profile customization with adaptive schema fields persisted to `localStorage`.
-- 🏏 **Multi-Sport Support (6 Sports Core):** Cricket, Football, Badminton, Swimming, Athletics, Chess.
-- 🔍 **Interactive Discovery Engine:** Real-time filtering by sport category, Hyderabad locality hubs, and item type (Athletes vs Events).
-- ⚡ **Instant Action Feedback:** Simulated "Connect" and "Join Event" flows with non-intrusive notification toasts that link directly to the user's joined events dashboard.
-- 📊 **From Fragmented to Connected Comparison:** Clear side-by-side breakdown contrasting today's broken WhatsApp loops against SportSphere.
-- 🌟 **Design & Visual Psychology:** Built with a professional sports-tech palette — **Deep Navy** (Trust & Stability), **Emerald Green** (Growth & Energy), and **Accent Orange** (Action CTAs).
-- 📱 **100% Responsive Design:** Flawless layout across mobile, tablet, laptop, and ultra-wide desktop screens.
+### 🔍 Flow A: Find & Join Games
+1. **Choose Sport:** Toggle across Cricket, Football, Badminton, Basketball, Swimming, and Chess.
+2. **Discover Games:** View live matches with venue, time, skill level, and available spots.
+3. **Inspect Game Details:** Review host, confirmed player roster, approximate distance, and match compatibility score.
+4. **1-Click Join Game:** Instantly reserves your spot, updates player count (e.g. `3 / 4` $\to$ `4 / 4`), and adds you to the roster with confirmation: *"You're in! You successfully joined this game."*
+
+### ➕ Flow B: Create a Game
+1. Click **Create Game** from Navbar or Hero.
+2. Fill out sport, game title, venue, date, time, skill level, and player count required.
+3. Publish $\to$ Game immediately appears at the top of **Discover Games** and is available for other athletes to join.
+
+---
+
+## ✨ 3. Core Features
+
+- 🏀 **Extensible Multi-Sport Support:** Cricket (🏏), Football (⚽), Badminton (🏸), Basketball (🏀), Swimming (🏊), Chess (♟️).
+- ⚡ **Match Compatibility Score:** Simple transparent rating calculating compatibility based on sport interest, skill level, distance, and schedule.
+- 👤 **Multi-Sport Athlete Profile:** Clean profile supporting multiple disciplines, skill ratings, location, availability, and real-time joined games tracker.
+- 🎯 **Hyper-Local Radius Search:** Filter across city hubs (Gachibowli, Madhapur, Kukatpally, Kondapur, Hitec City, Jubilee Hills, Banjara Hills).
+- 💾 **Persistent State:** Fast client-side state using React Context and `localStorage` so created games and joined rosters persist across sessions.
 
 ---
 
 ## 🛠️ 4. Tech Stack
 
-- **Framework:** React 18
+- **Frontend:** React 18
 - **Build Tool:** Vite 6
-- **Styling:** Tailwind CSS 3
+- **Styling:** Tailwind CSS 3 (Sports-Tech Palette: Deep Navy, Emerald Green, Sports Orange)
 - **Icons:** Lucide React
-- **State & Storage:** React Context + LocalStorage Persistence for zero-backend speed.
+- **State Management:** React Context API + LocalStorage Persistence
 
 ---
 
 ## 🚀 5. How to Run Locally
 
-### Prerequisites
-- Node.js (v18.0.0 or later)
-- npm (v9.0.0 or later)
-
-### Quick Start Commands
-
 ```bash
-# 1. Navigate to the project directory
-cd sportsphere
+# 1. Clone repository
+git clone https://github.com/Adityasantosh7/GARUD-SPIH108-.git
+cd GARUD-SPIH108-
 
 # 2. Install dependencies
 npm install
 
-# 3. Start the local development server
+# 3. Start development server
 npm run dev
 
-# 4. Open http://localhost:3000 in your browser
-```
-
-### Production Build & Preview
-
-```bash
-# Create optimized production build
-npm run build
-
-# Preview production build locally
-npm run preview
+# 4. Open in browser
+http://localhost:3000
 ```
 
 ---
 
-## 🔮 6. Future Scope & Roadmap
+## 🔮 6. Future Expansion Roadmap
 
-- **Phase 2 — Verified Coaches & Academy Directory:** Enabling certified trainers to list drills and coaching sessions.
-- **Phase 3 — Real-Time Venue & Turf Booking:** Direct integration with local sports complexes and turf arenas.
-- **Phase 4 — Localized Tournament & League Management:** Bracket generation, live scoring, and community leaderboards.
+- **Phase 2:** Verified Coaches & Certified Training Academy Directory
+- **Phase 3:** Real-Time Court & Turf Slot Booking Integrations
+- **Phase 4:** Regional League Ladders, Tournaments & Live Score Tracking
 
 ---
 
-## 👥 Team GARUD — Hackathon Submission
-
-*"Talent and opportunity should not remain disconnected simply because the right network doesn't exist."*
-
-Built with passion for grassroots sports by **Team GARUD**.
+© SportSphere — One Platform. Every Sport. Every Athlete.

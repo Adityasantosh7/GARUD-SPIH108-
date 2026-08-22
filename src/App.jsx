@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { GamesProvider } from './context/GamesContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProblemSection from './components/ProblemSection';
 import WhatIsSection from './components/WhatIsSection';
 import HowItWorksSection from './components/HowItWorksSection';
 import DiscoveryDemo from './components/DiscoveryDemo';
-import DetailModal from './components/DetailModal';
+import GameDetailsModal from './components/GameDetailsModal';
+import CreateGameModal from './components/CreateGameModal';
 import ComparisonSection from './components/ComparisonSection';
 import InnovationSection from './components/InnovationSection';
 import WhyItMattersSection from './components/WhyItMattersSection';
@@ -19,9 +21,9 @@ import Toast from './components/Toast';
 function AppContent() {
   const [currentView, setCurrentView] = useState('landing'); // 'landing' | 'profile'
   const [selectedSport, setSelectedSport] = useState('all');
-  const [activeModalItem, setActiveModalItem] = useState(null);
+  const [activeGameItem, setActiveGameItem] = useState(null);
+  const [isCreateGameOpen, setIsCreateGameOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
-  const { addJoinedEvent } = useAuth();
 
   const handleSelectSport = (sportId) => {
     setSelectedSport(sportId);
@@ -34,19 +36,38 @@ function AppContent() {
     }
   };
 
-  const handleOpenModal = (item) => {
-    setActiveModalItem(item);
+  const handleOpenGameDetails = (game) => {
+    setActiveGameItem(game);
   };
 
-  const handleCloseModal = () => {
-    setActiveModalItem(null);
+  const handleCloseGameDetails = () => {
+    setActiveGameItem(null);
   };
 
-  const handleActionSuccess = (msg) => {
-    setToastMessage(msg);
-    if (activeModalItem && activeModalItem.type === 'event') {
-      addJoinedEvent(activeModalItem);
+  const handleOpenCreateGame = () => {
+    setIsCreateGameOpen(true);
+  };
+
+  const handleCloseCreateGame = () => {
+    setIsCreateGameOpen(false);
+  };
+
+  const handleGameCreated = (newGame) => {
+    setToastMessage({
+      title: 'Game Published! 🎉',
+      description: `"${newGame.title}" is now live in Discover Games.`
+    });
+    if (currentView !== 'landing') {
+      setCurrentView('landing');
     }
+    setTimeout(() => {
+      const el = document.querySelector('#discovery-demo');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 150);
+  };
+
+  const handleActionFeedback = (msg) => {
+    setToastMessage(msg);
   };
 
   const handleLoginSuccess = (msg) => {
@@ -55,10 +76,11 @@ function AppContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-navy-900 selection:bg-sportsGreen-100 selection:text-sportsGreen-800">
-      {/* Navigation with Auth State */}
+      {/* Navigation */}
       <Navbar
         currentView={currentView}
         onNavigate={(view) => setCurrentView(view)}
+        onOpenCreateGame={handleOpenCreateGame}
       />
 
       {/* Main View Router */}
@@ -66,18 +88,26 @@ function AppContent() {
         {currentView === 'profile' ? (
           <ProfilePage
             onNavigateHome={() => setCurrentView('landing')}
-            onOpenDemo={() => {
+            onOpenDiscover={() => {
               setCurrentView('landing');
               setTimeout(() => {
                 const el = document.querySelector('#discovery-demo');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }, 100);
             }}
+            onOpenGameDetails={handleOpenGameDetails}
           />
         ) : (
           <>
             {/* 1. Hero */}
-            <Hero onSelectSport={handleSelectSport} />
+            <Hero
+              onSelectSport={handleSelectSport}
+              onOpenCreateGame={handleOpenCreateGame}
+              onOpenDiscover={() => {
+                const el = document.querySelector('#discovery-demo');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+            />
 
             {/* 2. The Problem Story */}
             <ProblemSection />
@@ -88,11 +118,12 @@ function AppContent() {
             {/* 4. How It Works (4 Steps) */}
             <HowItWorksSection />
 
-            {/* 5. Main Interactive Discovery Demo */}
+            {/* 5. Main Core Discover Games Interface */}
             <DiscoveryDemo
               selectedSport={selectedSport}
               onSelectSport={handleSelectSport}
-              onOpenModal={handleOpenModal}
+              onOpenGameDetails={handleOpenGameDetails}
+              onOpenCreateGame={handleOpenCreateGame}
             />
 
             {/* 6. Comparison: From Fragmented to Connected */}
@@ -105,7 +136,10 @@ function AppContent() {
             <WhyItMattersSection />
 
             {/* 9. Our Vision */}
-            <VisionSection />
+            <VisionSection onOpenDemo={() => {
+              const el = document.querySelector('#discovery-demo');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }} />
           </>
         )}
       </main>
@@ -113,18 +147,25 @@ function AppContent() {
       {/* Footer */}
       <Footer />
 
-      {/* Interactive Detail Modal */}
-      <DetailModal
-        item={activeModalItem}
-        isOpen={Boolean(activeModalItem)}
-        onClose={handleCloseModal}
-        onActionSuccess={handleActionSuccess}
+      {/* Interactive Game Details Modal (Working Join Game) */}
+      <GameDetailsModal
+        game={activeGameItem}
+        isOpen={Boolean(activeGameItem)}
+        onClose={handleCloseGameDetails}
+        onActionFeedback={handleActionFeedback}
       />
 
-      {/* Authentication Modal (Google, Apple, Email) */}
+      {/* Interactive Create Game Modal (Working Create & Publish) */}
+      <CreateGameModal
+        isOpen={isCreateGameOpen}
+        onClose={handleCloseCreateGame}
+        onGameCreated={handleGameCreated}
+      />
+
+      {/* Authentication Modal */}
       <AuthModal onLoginSuccess={handleLoginSuccess} />
 
-      {/* Action & Auth Toast Feedback */}
+      {/* Action & Feedback Toast Notifications */}
       {toastMessage && (
         <Toast
           message={toastMessage}
@@ -138,7 +179,9 @@ function AppContent() {
 export default function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <GamesProvider>
+        <AppContent />
+      </GamesProvider>
     </AuthProvider>
   );
 }

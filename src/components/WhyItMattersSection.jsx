@@ -24,7 +24,7 @@ export default function WhyItMattersSection() {
             Why SportSphere Matters
           </h2>
           <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
-            Empowering every stakeholder in the grassroots sporting landscape.
+            Empowering every athlete, team, venue, and community in the sporting landscape.
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export default function WhyItMattersSection() {
                 "Talent and opportunity should not remain disconnected simply because the right network doesn't exist."
               </p>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-slate-300">
-                <span>The Core Mission of SportSphere • Team GARUD</span>
+                <span>The Core Mission of SportSphere</span>
               </div>
             </div>
           </div>

@@ -12,8 +12,8 @@ export default function Toast({ message, onClose }) {
   if (!message) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 animate-slide-up">
-      <div className="bg-navy-900 text-white px-4 sm:px-5 py-3.5 rounded-2xl shadow-2xl border border-navy-700 flex items-center gap-3 sm:gap-3.5 max-w-md mx-auto">
+    <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
+      <div className="bg-navy-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-navy-700 flex items-center gap-3.5 max-w-md">
         <div className="w-8 h-8 rounded-xl bg-sportsGreen/20 text-sportsGreen flex items-center justify-center shrink-0">
           <CheckCircle2 className="w-5 h-5" />
         </div>
@@ -23,7 +23,7 @@ export default function Toast({ message, onClose }) {
         </div>
         <button
           onClick={onClose}
-          className="text-slate-400 hover:text-white p-1 rounded-lg transition-colors shrink-0"
+          className="text-slate-400 hover:text-white p-1 rounded-lg transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
@@ -31,4 +31,3 @@ export default function Toast({ message, onClose }) {
     </div>
   );
 }
-

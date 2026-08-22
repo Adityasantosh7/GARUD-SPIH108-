@@ -22,10 +22,10 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-              One Platform. Every Sport. Every Athlete. Built to eliminate fragmented sports discovery and connect grassroots athletic talent.
+              One Platform. Every Sport. Every Athlete. Built to eliminate fragmented sports discovery and connect players to real games nearby.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-slate-300">
-              <span>🚀 Team <strong className="text-white font-extrabold">GARUD</strong> — Round 3 Hackathon</span>
+              <span>🚀 One Platform. Every Sport. Every Athlete.</span>
             </div>
           </div>
 
@@ -52,7 +52,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#discovery-demo" className="hover:text-sportsGreen transition-colors">
-                  Interactive Discovery Demo
+                  Discover Games Hub
                 </a>
               </li>
               <li>
@@ -71,7 +71,7 @@ export default function Footer() {
           {/* Supported Sports Taxonomy */}
           <div className="md:col-span-4 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400">
-              Multi-Sport Ecosystem
+              Multi-Sport Platform
             </h4>
             <div className="flex flex-wrap gap-2 text-xs">
               <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
@@ -84,17 +84,17 @@ export default function Footer() {
                 🏸 Badminton
               </span>
               <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
-                🏊 Swimming
+                🏀 Basketball
               </span>
               <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
-                🏃 Athletics
+                🏊 Swimming
               </span>
               <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
                 ♟️ Chess
               </span>
             </div>
             <p className="text-xs text-slate-500 pt-2">
-              Adaptive schema engineered for multi-sport discovery without forcing rigid generic templates.
+              Extensible multi-sport architecture engineered so any new sport or format integrates effortlessly.
             </p>
           </div>
 
@@ -103,7 +103,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>
-            © {new Date().getFullYear()} SportSphere. Hackathon Project by <strong className="text-slate-300">Team GARUD</strong>.
+            © {new Date().getFullYear()} SportSphere. One Platform. Every Sport. Every Athlete.
           </p>
           <div className="flex items-center gap-4">
             <button

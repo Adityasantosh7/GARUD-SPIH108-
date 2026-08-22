@@ -3,7 +3,7 @@ export const SPORTS_LIST = [
     id: 'cricket',
     name: 'Cricket',
     icon: '🏏',
-    badge: 'Matches • Teams',
+    badge: 'Matches • Nets • Teams',
     description: 'Leather ball, tennis ball, turf leagues, and net practice sessions.',
     attributes: [
       { label: 'Batting Hand', example: 'Right-handed' },
@@ -35,7 +35,20 @@ export const SPORTS_LIST = [
       { label: 'Play Style', example: 'Attacking / Smash specialist' },
       { label: 'Format', example: 'Singles & Mixed Doubles' },
       { label: 'Court Type', example: 'Indoor Wooden / Synthetic' },
-      { label: 'Looking For', example: 'Sparring partner (Adv-Intermediate)' }
+      { label: 'Looking For', example: 'Sparring partner (Intermediate)' }
+    ]
+  },
+  {
+    id: 'basketball',
+    name: 'Basketball',
+    icon: '🏀',
+    badge: 'Full Court • 3v3 Pickups',
+    description: 'Indoor hardwood courts, outdoor streetball, and weekend 5v5 pickup runs.',
+    attributes: [
+      { label: 'Position', example: 'Point Guard / Shooting Guard' },
+      { label: 'Play Style', example: 'Playmaker & Perimeter Shooter' },
+      { label: 'Format', example: '5v5 Full Court & 3v3 Half' },
+      { label: 'Preferred Court', example: 'Indoor Hardwood / Synthetic' }
     ]
   },
   {
@@ -49,19 +62,6 @@ export const SPORTS_LIST = [
       { label: '50m Freestyle PB', example: '28.4 seconds' },
       { label: 'Pool Preference', example: '50m Olympic / Heated Indoor' },
       { label: 'Goal', example: 'Triathlon Swim Training' }
-    ]
-  },
-  {
-    id: 'athletics',
-    name: 'Athletics',
-    icon: '🏃',
-    badge: 'Pace • Track Sessions',
-    description: 'Endurance distance runs, sprint intervals, and marathon groups.',
-    attributes: [
-      { label: 'Primary Discipline', example: '10K Road & Half Marathon' },
-      { label: 'Average Pace', example: '4:55 min/km' },
-      { label: 'Weekly Mileage', example: '40-50 km' },
-      { label: 'Training Routine', example: 'Early Morning Weekend Runs' }
     ]
   },
   {
@@ -80,369 +80,314 @@ export const SPORTS_LIST = [
 ];
 
 export const POPULAR_SEARCH_TAGS = [
-  '⚡ Weekend Matches',
-  '🏸 Singles Sparring',
-  '🏏 Nets Practice',
+  '⚡ Today Games',
+  '🏸 Badminton Doubles',
+  '🏏 Weekend Cricket',
   '⚽ Turf 7v7',
-  '🏃 Morning 10K',
+  '🏀 5v5 Basketball',
   '🏊 Lap Swimming',
   '♟️ Rapid Chess',
-  '📍 Gachibowli'
+  '📍 Gachibowli',
+  '📍 Madhapur'
 ];
 
-export const MOCK_DISCOVERY_ITEMS = [
+export const DEFAULT_GAMES = [
   {
-    id: 'ath-1',
-    type: 'athlete',
-    name: 'Arjun',
-    fullName: 'Arjun Varma',
+    id: 'game-1',
+    sport: 'badminton',
+    sportLabel: 'Badminton',
+    sportIcon: '🏸',
+    title: 'Badminton Evening Game',
+    venue: 'Nexus Sports Arena',
+    area: 'Gachibowli, Hyderabad',
+    date: 'Today',
+    time: '6:00 PM - 8:00 PM',
+    skillLevel: 'Intermediate',
+    currentPlayers: 3,
+    requiredPlayers: 4,
+    distanceNum: 1.8,
+    distance: '1.8 km away',
+    matchScore: 88,
+    compatibilityDetails: {
+      sameSport: true,
+      similarSkill: true,
+      nearby: true,
+      compatibleTime: true
+    },
+    host: {
+      name: 'Vikas Rao',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+      skill: 'Intermediate'
+    },
+    players: [
+      { name: 'Vikas Rao (Host)', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Priya S.', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Arun K.', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' }
+    ],
+    description: 'Looking for 1 more intermediate badminton player for fast-paced doubles sparring. Wooden synthetic court booked. Non-marking shoes mandatory.',
+    costPerPlayer: '₹150 (Court split)'
+  },
+  {
+    id: 'game-2',
     sport: 'cricket',
     sportLabel: 'Cricket',
     sportIcon: '🏏',
-    skillLevel: 'Intermediate',
-    location: 'Hyderabad',
+    title: 'Weekend Cricket Match',
+    venue: 'Gachibowli Stadium Nets & Turf',
     area: 'Gachibowli, Hyderabad',
+    date: 'Saturday',
+    time: '7:00 AM - 10:30 AM',
+    skillLevel: 'Intermediate',
+    currentPlayers: 8,
+    requiredPlayers: 10,
     distanceNum: 2.4,
     distance: '2.4 km away',
-    matchScore: 98,
-    availability: 'Sat & Sun mornings',
-    tags: ['Leather Ball', 'Top Order', 'Medium Fast'],
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
-    lookingFor: 'Weekend T20 teams & net practice partners',
-    sportSpecific: {
-      'Primary Role': 'Top-order Batsman & Off-spinner',
-      'Batting Hand': 'Right Handed (Power hitter)',
-      'Bowling Style': 'Right-arm Offbreak',
-      'Availability': 'Saturday & Sunday mornings',
-      'Recent Activity': 'Scored 48*(24) in Hyderabad Corporate Cup'
+    matchScore: 92,
+    compatibilityDetails: {
+      sameSport: true,
+      similarSkill: true,
+      nearby: true,
+      compatibleTime: true
     },
-    bio: 'Playing cricket for 8+ years. Looking for competitive weekend leather-ball teams and serious nets session partners in Gachibowli.'
+    host: {
+      name: 'Arjun Varma',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+      skill: 'Intermediate'
+    },
+    players: [
+      { name: 'Arjun Varma (Host)', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Siddharth R.', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Rohit P.', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Deepak T.', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Manoj G.', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Karthik N.', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Sanjay B.', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Naveen K.', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80' }
+    ],
+    description: '20-over leather ball practice match against corporate team. Need 2 batsmen/all-rounders with match fitness. White cricket kits preferred.',
+    costPerPlayer: '₹250 (Pitch + Umpire split)'
   },
   {
-    id: 'ath-2',
-    type: 'athlete',
-    name: 'Priya',
-    fullName: 'Priya Sharma',
-    sport: 'badminton',
-    sportLabel: 'Badminton',
-    sportIcon: '🏸',
-    skillLevel: 'Intermediate',
-    location: 'Hyderabad',
-    area: 'Madhapur, Hyderabad',
-    distanceNum: 1.8,
-    distance: '1.8 km away',
-    matchScore: 96,
-    availability: 'Weekday evenings (6:30 PM)',
-    tags: ['Singles Sparring', 'Wooden Court', 'Drops & Smashes'],
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80',
-    lookingFor: 'Practice partners & mixed doubles partner',
-    sportSpecific: {
-      'Play Style': 'All-court & Quick Reflexes',
-      'Dominant Hand': 'Right',
-      'Preferred Court': 'Indoor Wooden (GamePoint / Gopichand Academy area)',
-      'Availability': 'Weekday evenings (6:30 PM - 8:30 PM)',
-      'Skill Note': 'Strong baseline drops and quick net interceptions'
-    },
-    bio: 'Regular badminton player looking for intermediate/advanced players for high-intensity rallies and doubles tournaments.'
-  },
-  {
-    id: 'ath-3',
-    type: 'athlete',
-    name: 'Rahul',
-    fullName: 'Rahul Sen',
+    id: 'game-3',
     sport: 'football',
     sportLabel: 'Football',
     sportIcon: '⚽',
+    title: 'Evening Football 7v7',
+    venue: 'Cyber City Turf Club',
+    area: 'Gachibowli, Hyderabad',
+    date: 'Today',
+    time: '7:30 PM - 9:00 PM',
     skillLevel: 'Beginner',
-    location: 'Hyderabad',
-    area: 'Kondapur, Hyderabad',
-    distanceNum: 3.1,
-    distance: '3.1 km away',
-    matchScore: 91,
-    availability: 'Friday & Sunday nights',
-    tags: ['Turf 5v5', 'Winger', 'Friendly Pickup'],
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
-    lookingFor: 'Casual turf games & 5v5 friendly pickups',
-    sportSpecific: {
-      'Position': 'Winger / Right Midfielder',
-      'Preferred Foot': 'Right',
-      'Format': '5v5 & 7v7 Artificial Turf',
-      'Availability': 'Friday & Sunday evenings',
-      'Focus': 'Stamina building and fun weekend matches'
+    currentPlayers: 7,
+    requiredPlayers: 10,
+    distanceNum: 2.1,
+    distance: '2.1 km away',
+    matchScore: 84,
+    compatibilityDetails: {
+      sameSport: true,
+      similarSkill: false,
+      nearby: true,
+      compatibleTime: true
     },
-    bio: 'Passionate football enthusiast looking to join weekly turf pickup games with friendly, welcoming groups.'
+    host: {
+      name: 'Rahul Sen',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+      skill: 'Beginner'
+    },
+    players: [
+      { name: 'Rahul Sen (Host)', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Sameer J.', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Arman K.', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Gaurav M.', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Sunny P.', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Adil H.', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Tanmay C.', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' }
+    ],
+    description: 'Casual friendly 7v7 turf pickup under floodlights. High energy, friendly vibes, rotating goalkeepers. Turf shoes or sneakers only.',
+    costPerPlayer: '₹200 per player'
   },
   {
-    id: 'evt-1',
-    type: 'event',
-    name: 'Local Badminton Practice',
-    title: 'Local Badminton Practice',
+    id: 'game-4',
     sport: 'badminton',
     sportLabel: 'Badminton',
     sportIcon: '🏸',
+    title: 'Badminton Doubles Rallies',
+    venue: 'Kukatpally Indoor Badminton Center',
+    area: 'Kukatpally, Hyderabad',
+    date: 'Tomorrow',
+    time: '6:30 AM - 8:00 AM',
     skillLevel: 'Intermediate',
-    location: 'Hyderabad',
-    area: 'Gachibowli Indoor Arena, Hyderabad',
-    distanceNum: 2.0,
-    distance: '2.0 km away',
-    matchScore: 99,
-    availability: 'Sunday 7:00 AM',
-    tags: ['2 Synthetic Courts', 'Feather Shuttles', 'Rotating Doubles'],
-    bannerImg: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=600&auto=format&fit=crop&q=80',
-    schedule: 'Sunday • 7:00 AM - 9:00 AM',
-    day: 'Sunday',
-    time: '7:00 AM - 9:00 AM',
-    participantsCount: 6,
-    maxSpots: 8,
-    spotsRemaining: 2,
-    organizer: 'Gachibowli Shuttlers Club',
-    sportSpecific: {
-      'Format': 'Rotating Doubles & Sparring Rallies',
-      'Courts Booked': '2 Synthetic Wooden Courts',
-      'Shuttles Provided': 'Yonex AS-20 Feather Shuttles',
-      'Entry Fee': '₹200 per player (Court split)',
-      'Rules': 'Non-marking shoes mandatory'
+    currentPlayers: 3,
+    requiredPlayers: 4,
+    distanceNum: 3.5,
+    distance: '3.5 km away',
+    matchScore: 91,
+    compatibilityDetails: {
+      sameSport: true,
+      similarSkill: true,
+      nearby: true,
+      compatibleTime: true
     },
-    description: 'Friendly weekend practice session open for intermediate badminton enthusiasts. We rotate courts so everyone gets balanced match time and practice.'
+    host: {
+      name: 'Sneha Patil',
+      avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80',
+      skill: 'Intermediate'
+    },
+    players: [
+      { name: 'Sneha Patil (Host)', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Harish M.', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Ravi T.', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80' }
+    ],
+    description: 'Early morning high-intensity badminton session. Need one more intermediate partner for balanced doubles matches.',
+    costPerPlayer: '₹175'
   },
   {
-    id: 'ath-4',
-    type: 'athlete',
-    name: 'Ananya',
-    fullName: 'Ananya Rao',
+    id: 'game-5',
+    sport: 'basketball',
+    sportLabel: 'Basketball',
+    sportIcon: '🏀',
+    title: 'Weekend Basketball 5v5',
+    venue: 'Madhapur Sports Complex',
+    area: 'Madhapur, Hyderabad',
+    date: 'Sunday',
+    time: '5:30 PM - 7:30 PM',
+    skillLevel: 'Intermediate',
+    currentPlayers: 8,
+    requiredPlayers: 10,
+    distanceNum: 2.8,
+    distance: '2.8 km away',
+    matchScore: 89,
+    compatibilityDetails: {
+      sameSport: true,
+      similarSkill: true,
+      nearby: true,
+      compatibleTime: true
+    },
+    host: {
+      name: 'Rohan Mehra',
+      avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80',
+      skill: 'Intermediate'
+    },
+    players: [
+      { name: 'Rohan Mehra (Host)', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Tarun V.', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Abhishek D.', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Farhan S.', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Kunal B.', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Aditya P.', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Varun K.', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Jatin N.', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80' }
+    ],
+    description: 'Full-court 5v5 pickup runs on synthetic outdoor court. Looking for 2 active players with solid hustle and team passing mindset.',
+    costPerPlayer: 'Free Community Court'
+  },
+  {
+    id: 'game-6',
     sport: 'swimming',
     sportLabel: 'Swimming',
     sportIcon: '🏊',
-    skillLevel: 'Advanced',
-    location: 'Hyderabad',
+    title: 'Morning Swim Laps & Pace Training',
+    venue: 'GHMC Olympic Aquatics Complex',
     area: 'Jubilee Hills, Hyderabad',
-    distanceNum: 4.5,
-    distance: '4.5 km away',
-    matchScore: 94,
-    availability: 'Tue & Thu 6:00 AM',
-    tags: ['Freestyle', '50m Olympic Pool', 'Triathlon Prep'],
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80',
-    lookingFor: 'Lap swimming buddy & triathlon training partner',
-    sportSpecific: {
-      'Primary Stroke': 'Freestyle & Breaststroke',
-      'Pace': '1:32 / 100m pace',
-      'Pool': '50m Olympic Pool (GHMC Complex)',
-      'Routine': 'Tuesday & Thursday 6:00 AM sessions'
-    },
-    bio: 'State-level competitive swimmer now training for standard distance triathlons. Looking for focused morning swim buddies.'
-  },
-  {
-    id: 'evt-2',
-    type: 'event',
-    name: 'Hitec 7v7 Football Clash',
-    title: 'Hitec 7v7 Football Clash',
-    sport: 'football',
-    sportLabel: 'Football',
-    sportIcon: '⚽',
-    skillLevel: 'Intermediate',
-    location: 'Hyderabad',
-    area: 'Hitec City Turf Arena, Hyderabad',
-    distanceNum: 3.6,
-    distance: '3.6 km away',
-    matchScore: 95,
-    availability: 'Friday 8:00 PM',
-    tags: ['Under Lights', 'FIFA Grade Turf', 'Bibs Provided'],
-    bannerImg: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&auto=format&fit=crop&q=80',
-    schedule: 'Friday • 8:00 PM - 10:00 PM',
-    day: 'Friday',
-    time: '8:00 PM - 10:00 PM',
-    participantsCount: 12,
-    maxSpots: 14,
-    spotsRemaining: 2,
-    organizer: 'Cyber City Kickers',
-    sportSpecific: {
-      'Format': '7 vs 7 Fast Paced Turf Match',
-      'Turf Size': 'FIFA Grade Artificial Turf',
-      'Bibs & Ball': 'Provided on venue',
-      'Split Fee': '₹250 per player',
-      'Footwear': 'Turf studs or flat trainers only'
-    },
-    description: 'Weekly Friday night under-lights football match. High-energy game with rotating subs, refereeing on honour system, and post-match hydration.'
-  },
-  {
-    id: 'ath-5',
-    type: 'athlete',
-    name: 'Vikram',
-    fullName: 'Vikram Mehta',
-    sport: 'chess',
-    sportLabel: 'Chess',
-    sportIcon: '♟️',
-    skillLevel: 'Advanced',
-    location: 'Hyderabad',
-    area: 'Banjara Hills, Hyderabad',
-    distanceNum: 4.0,
-    distance: '4.0 km away',
-    matchScore: 92,
-    availability: 'Saturday 4:00 PM',
-    tags: ['1840 Elo', 'Rapid 15+10', 'OTB Board'],
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
-    lookingFor: 'Over-the-board Rapid sparring & tournament prep',
-    sportSpecific: {
-      'Rating': 'FIDE 1840 / Lichess 2120',
-      'Preferred Control': '15+10 Rapid / 5+3 Blitz',
-      'Venue': 'Roastery Coffee House / Board Game Lounges',
-      'Focus Area': 'Endgame precision & Sicilian Najdorf preparation'
-    },
-    bio: 'Tournament chess player looking for serious sparring partners rated 1600+ for over-the-board clocks and analysis sessions.'
-  },
-  {
-    id: 'evt-3',
-    type: 'event',
-    name: 'Sunrise 10K Community Run',
-    title: 'Sunrise 10K Community Run',
-    sport: 'athletics',
-    sportLabel: 'Athletics',
-    sportIcon: '🏃',
-    skillLevel: 'Beginner',
-    location: 'Hyderabad',
-    area: 'KBR National Park Gate 1, Hyderabad',
-    distanceNum: 3.2,
-    distance: '3.2 km away',
-    matchScore: 97,
-    availability: 'Saturday 6:00 AM',
-    tags: ['5:15 Pacers', 'Hydration Support', 'Free Event'],
-    bannerImg: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=600&auto=format&fit=crop&q=80',
-    schedule: 'Saturday • 6:00 AM',
-    day: 'Saturday',
+    date: 'Tuesday',
     time: '6:00 AM - 7:30 AM',
-    participantsCount: 28,
-    maxSpots: 50,
-    spotsRemaining: 22,
-    organizer: 'Hyderabad Runners Collective',
-    sportSpecific: {
-      'Distance': '5K Fun Loop & 10K Paced Loop',
-      'Pace Groups': '5:00 / 5:45 / 6:30 min/km pacers',
-      'Hydration': 'Water & electrolytes at 5K point',
-      'Fee': 'Free Community Event',
-      'Post Run': 'Stretching & Chai at Park Gate'
-    },
-    description: 'Weekly Saturday sunrise run around KBR outer loop. Group warm-up at 5:50 AM, staggered pace groups, followed by group cool down.'
-  },
-  {
-    id: 'ath-6',
-    type: 'athlete',
-    name: 'Karthik',
-    fullName: 'Karthik Reddy',
-    sport: 'athletics',
-    sportLabel: 'Athletics',
-    sportIcon: '🏃',
-    skillLevel: 'Intermediate',
-    location: 'Hyderabad',
-    area: 'Kondapur, Hyderabad',
-    distanceNum: 2.9,
-    distance: '2.9 km away',
-    matchScore: 93,
-    availability: 'Sun 5:30 AM',
-    tags: ['Half Marathon', 'Tempo 5:15 Pace', 'Long Runs'],
-    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80',
-    lookingFor: 'Morning long-run pacers (5:15 min/km)',
-    sportSpecific: {
-      'Focus': 'Hyderabad Half Marathon Prep',
-      'Pace': '5:15 min/km tempo pace',
-      'Distance Target': '15-18 km Sunday long runs',
-      'Availability': 'Saturday & Sunday 5:30 AM'
-    },
-    bio: 'Preparing for my 3rd Half Marathon. Looking for disciplined runners running 5:00-5:30 pace to share the morning kilometers.'
-  },
-  {
-    id: 'ath-7',
-    type: 'athlete',
-    name: 'Siddharth',
-    fullName: 'Siddharth Roy',
-    sport: 'cricket',
-    sportLabel: 'Cricket',
-    sportIcon: '🏏',
     skillLevel: 'Advanced',
-    location: 'Hyderabad',
-    area: 'Madhapur, Hyderabad',
-    distanceNum: 1.5,
-    distance: '1.5 km away',
-    matchScore: 97,
-    availability: 'Weekend Tournaments',
-    tags: ['Wicketkeeper', 'Opener', 'Division League'],
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
-    lookingFor: 'Competitive corporate cup team & morning nets',
-    sportSpecific: {
-      'Primary Role': 'Wicketkeeper Batsman',
-      'Batting Hand': 'Left Handed Opener',
-      'Experience': 'HCA Division League Player',
-      'Availability': 'Saturday matches & weekday nets 6 AM'
-    },
-    bio: 'Left-handed opening batsman and keeper. Playing competitive weekend matches across Hyderabad for 6+ years.'
-  },
-  {
-    id: 'evt-4',
-    type: 'event',
-    name: 'Weekend Rapid Chess Blitz',
-    title: 'Weekend Rapid Chess Blitz',
-    sport: 'chess',
-    sportLabel: 'Chess',
-    sportIcon: '♟️',
-    skillLevel: 'Intermediate',
-    location: 'Hyderabad',
-    area: 'Jubilee Hills Board Lounge, Hyderabad',
+    currentPlayers: 2,
+    requiredPlayers: 4,
     distanceNum: 4.2,
     distance: '4.2 km away',
-    matchScore: 94,
-    availability: 'Sunday 4:30 PM',
-    tags: ['5 Rounds Swiss', '10+0 Time Control', 'DGT Clocks'],
-    bannerImg: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&auto=format&fit=crop&q=80',
-    schedule: 'Sunday • 4:30 PM - 7:30 PM',
-    day: 'Sunday',
-    time: '4:30 PM - 7:30 PM',
-    participantsCount: 16,
-    maxSpots: 20,
-    spotsRemaining: 4,
-    organizer: 'Hyderabad Chess Knights',
-    sportSpecific: {
-      'Tournament Style': '5-Round Swiss System',
-      'Time Control': '10 minutes per side (Rapid)',
-      'Boards Provided': 'Standard Staunton wooden sets with DGT timers',
-      'Registration': 'Free for club members / ₹100 for open guests'
+    matchScore: 82,
+    compatibilityDetails: {
+      sameSport: false,
+      similarSkill: true,
+      nearby: false,
+      compatibleTime: true
     },
-    description: 'Weekly Sunday rapid meet for chess enthusiasts. Casual analysis and timed rated matches in a cafe setting.'
+    host: {
+      name: 'Ananya Rao',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80',
+      skill: 'Advanced'
+    },
+    players: [
+      { name: 'Ananya Rao (Host)', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Devendra M.', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80' }
+    ],
+    description: 'Structured 50m lap swimming session focusing on freestyle interval pace (1:35/100m) and endurance conditioning.',
+    costPerPlayer: 'Pool Entry ₹100'
+  },
+  {
+    id: 'game-7',
+    sport: 'chess',
+    sportLabel: 'Chess',
+    sportIcon: '♟️',
+    title: 'Rapid Chess Meetup (10+0)',
+    venue: 'Roastery Coffee House',
+    area: 'Banjara Hills, Hyderabad',
+    date: 'Sunday',
+    time: '4:00 PM - 7:00 PM',
+    skillLevel: 'Intermediate',
+    currentPlayers: 5,
+    requiredPlayers: 8,
+    distanceNum: 3.9,
+    distance: '3.9 km away',
+    matchScore: 87,
+    compatibilityDetails: {
+      sameSport: true,
+      similarSkill: true,
+      nearby: true,
+      compatibleTime: true
+    },
+    host: {
+      name: 'Vikram Mehta',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+      skill: 'Intermediate (1840 Elo)'
+    },
+    players: [
+      { name: 'Vikram Mehta (Host)', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Nikhil S.', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Praveen G.', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Divya M.', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80' },
+      { name: 'Ritesh V.', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80' }
+    ],
+    description: 'Over-the-board Rapid chess (10+0 and 5+3 Blitz). Clock sparring, endgame discussions, and friendly tournament brackets.',
+    costPerPlayer: 'Free (Order your own beverage)'
   }
 ];
 
 export const WORKFLOW_STEPS = [
   {
     number: '01',
-    title: 'Create Your Profile',
+    title: 'Create Profile',
     badge: 'Identity',
-    description: 'Add your sport, skill level, location, and relevant achievements without messy forms.',
-    subtext: 'Flexible schema adapts automatically whether you play Cricket, Swim, or play Chess.',
+    description: 'Select your sports, skill levels, location, and availability in seconds.',
+    subtext: 'Flexible identity system that adapts automatically across any sport.',
     iconName: 'UserPlus',
     color: 'emerald'
   },
   {
     number: '02',
-    title: 'Discover',
+    title: 'Discover Games',
     badge: 'Discovery',
-    description: 'Find athletes, teams, and events based on your exact interests and nearby radius.',
-    subtext: 'Filter effortlessly by sport type, distance, and skill compatibility.',
+    description: 'Browse local matches and practice sessions filtered by sport, distance, and skill.',
+    subtext: 'Instantly view available spots, venues, and compatibility match scores.',
     iconName: 'Compass',
     color: 'blue'
   },
   {
     number: '03',
-    title: 'Connect',
-    badge: 'Network',
-    description: 'Connect directly with suitable athletes, team captains, or event hosts.',
-    subtext: 'No cold calls or dead WhatsApp group chats—reach players who are actively looking.',
+    title: 'Connect & Join',
+    badge: 'Match',
+    description: 'Claim your spot with 1-click Join Game and get confirmed on the player roster.',
+    subtext: 'No unsearchable chat groups or ghosted invites—direct roster confirmation.',
     iconName: 'MessageSquare',
     color: 'amber'
   },
   {
     number: '04',
-    title: 'Participate',
-    badge: 'Action',
-    description: 'Join a match, practice session, or local tournament with complete confidence.',
-    subtext: 'Turn digital discovery into real-world court, turf, track, and board participation.',
+    title: 'Actually Play',
+    badge: 'Play',
+    description: 'Show up to the court, turf, pool, or board and turn your intention into real games.',
+    subtext: 'From wanting to play to actually stepping onto the field.',
     iconName: 'Trophy',
     color: 'orange'
   }
@@ -452,48 +397,48 @@ export const COMPARISON_DATA = {
   today: {
     title: 'TODAY (Fragmented)',
     items: [
-      { text: 'Scattered across dozens of dead WhatsApp groups', negative: true },
-      { text: 'Relying solely on existing personal contacts', negative: true },
-      { text: 'Different isolated single-sport apps with no cross-discovery', negative: true },
-      { text: 'Zero visibility for upcoming local talent and grassroots events', negative: true },
-      { text: 'Matches cancel last minute due to missing 1-2 players', negative: true }
+      { text: 'Scattered across unorganized, noisy chat groups', negative: true },
+      { text: 'Relying exclusively on existing immediate personal contacts', negative: true },
+      { text: 'Isolated single-sport apps with zero cross-discovery', negative: true },
+      { text: 'Matches constantly cancelled due to missing 1-2 players', negative: true },
+      { text: 'Incompatible skill levels leading to unbalanced games', negative: true }
     ]
   },
   sportsphere: {
     title: 'SPORTSPHERE (Unified)',
     items: [
-      { text: 'One Universal Sports Identity for every discipline', positive: true },
-      { text: 'One Unified Discovery Space with localized radius filtering', positive: true },
-      { text: 'Athletes + Teams + Events seamlessly interconnected', positive: true },
-      { text: '1-Click Direct Connection with matched skill levels', positive: true },
-      { text: 'Zero friction from profile creation to real-world participation', positive: true }
+      { text: 'One Unified Profile for all your sports disciplines', positive: true },
+      { text: 'Real-time Discover Games hub with hyper-local radius search', positive: true },
+      { text: '1-Click Join Game with live player count updates', positive: true },
+      { text: 'Create and publish your own game in under 30 seconds', positive: true },
+      { text: 'Clear compatibility scores to ensure balanced matches', positive: true }
     ]
   }
 };
 
 export const VALUE_PILLARS = [
   {
-    title: 'Athletes',
+    title: 'Athletes & Players',
     icon: 'UserCheck',
     color: 'emerald',
-    description: 'Find practice partners, sparring buddies, and matches beyond their existing immediate network.'
+    description: 'Find compatible players, sparring buddies, and open matches within minutes.'
   },
   {
-    title: 'Teams & Clubs',
+    title: 'Teams & Groups',
     icon: 'ShieldCheck',
     color: 'blue',
-    description: 'Discover potential players, fill open roster spots, and organize friendly scrimmages easily.'
+    description: 'Fill open roster spots quickly and prevent match cancellations.'
   },
   {
-    title: 'Event Organizers',
+    title: 'Sports Venues',
     icon: 'CalendarCheck',
     color: 'orange',
-    description: 'Reach verified, active participants in their city and maximize tournament registrations.'
+    description: 'Connect with active local sporting groups and maximize court utilization.'
   },
   {
     title: 'Local Communities',
     icon: 'Users',
     color: 'purple',
-    description: 'Make grassroots sports participation, public grounds, and active lifestyles genuinely accessible.'
+    description: 'Make grassroots sports accessible, healthy, and easy for everyone nearby.'
   }
 ];
