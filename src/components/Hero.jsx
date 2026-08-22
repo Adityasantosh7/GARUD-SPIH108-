@@ -1,8 +1,11 @@
 import React from 'react';
-import { ArrowRight, Sparkles, MapPin, Users, Award, Play } from 'lucide-react';
+import { ArrowRight, Sparkles, MapPin, Users, Award, Play, Activity } from 'lucide-react';
 import { SPORTS_LIST } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 
 export default function Hero({ onSelectSport }) {
+  const { openAuthModal } = useAuth();
+
   const handleScrollTo = (id) => {
     const element = document.querySelector(id);
     if (element) {
@@ -20,25 +23,25 @@ export default function Hero({ onSelectSport }) {
   };
 
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-b from-slate-100/80 via-white to-slate-50">
-      {/* Background Decorative Rings / Gradients */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sportsGreen/5 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute top-1/3 right-10 w-96 h-96 bg-sportsOrange/5 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none -z-10" />
+    <section className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-b from-slate-100/80 via-white to-slate-50">
+      {/* Background Decorative Glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-sportsGreen/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/3 right-4 sm:right-10 w-72 sm:w-96 h-72 sm:h-96 bg-sportsOrange/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-4xl mx-auto">
           {/* Top Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white shadow-sm border border-slate-200 text-xs font-semibold text-navy-800 mb-8 animate-fade-in">
-            <span className="flex h-2 w-2 rounded-full bg-sportsGreen animate-pulse"></span>
-            <span className="font-bold text-navy-900">Unified Multi-Sport Ecosystem</span>
-            <span className="text-slate-300">•</span>
-            <span className="text-slate-600">Local Athletes & Matches</span>
-            <Sparkles className="w-3.5 h-3.5 text-sportsOrange" />
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white shadow-sm border border-slate-200 text-xs font-semibold text-navy-800 mb-6 sm:mb-8 animate-fade-in max-w-full truncate">
+            <span className="flex h-2 w-2 rounded-full bg-sportsGreen animate-pulse shrink-0"></span>
+            <span className="font-extrabold text-navy-900 truncate">Unified Multi-Sport Ecosystem</span>
+            <span className="text-slate-300 hidden sm:inline">•</span>
+            <span className="text-slate-600 hidden sm:inline">Local Athletes & Matches</span>
+            <Sparkles className="w-3.5 h-3.5 text-sportsOrange shrink-0" />
           </div>
 
           {/* Main Hero Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-navy-900 tracking-tight leading-[1.1] mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-navy-900 tracking-tight leading-[1.15] mb-5 sm:mb-6">
             One Platform.{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-900 via-sportsGreen-600 to-sportsGreen-500">
               Every Sport.
@@ -46,7 +49,7 @@ export default function Hero({ onSelectSport }) {
             <span className="relative inline-block">
               Every Athlete.
               <svg
-                className="absolute -bottom-2 left-0 w-full text-sportsOrange/80"
+                className="absolute -bottom-1.5 sm:-bottom-2 left-0 w-full text-sportsOrange/80"
                 viewBox="0 0 250 12"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,43 +65,39 @@ export default function Hero({ onSelectSport }) {
           </h1>
 
           {/* Subheading */}
-          <p className="text-lg sm:text-xl md:text-2xl text-slate-600 font-normal leading-relaxed max-w-3xl mx-auto mb-10">
-            Build your sports identity, discover athletes and opportunities nearby, and connect with the sporting community around you.
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 font-normal leading-relaxed max-w-3xl mx-auto mb-8 sm:mb-10 px-2">
+            Build your unified sports identity, discover sparring partners and pickup matches nearby, and connect with the grassroots sporting community around you.
           </p>
 
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 max-w-md sm:max-w-none mx-auto">
             <a
               href="#discovery-demo"
               onClick={(e) => {
                 e.preventDefault();
                 handleScrollTo('#discovery-demo');
               }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-base font-bold text-white bg-sportsOrange hover:bg-sportsOrange-600 active:scale-95 transition-all shadow-lg shadow-sportsOrange/25 hover:shadow-xl hover:shadow-sportsOrange/30 group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 rounded-2xl text-sm sm:text-base font-bold text-white bg-sportsOrange hover:bg-sportsOrange-600 active:scale-95 transition-all shadow-lg shadow-sportsOrange/25 hover:shadow-xl hover:shadow-sportsOrange/30 group"
             >
-              <span>Explore SportSphere</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <span>Explore Live Discovery</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
 
-            <a
-              href="#how-it-works"
-              onClick={(e) => {
-                e.preventDefault();
-                handleScrollTo('#how-it-works');
-              }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-bold text-navy-800 bg-white hover:bg-slate-50 active:scale-95 transition-all border border-slate-200 shadow-sm hover:shadow group"
+            <button
+              onClick={() => openAuthModal('demo')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl text-sm sm:text-base font-bold text-navy-900 bg-white hover:bg-slate-50 active:scale-95 transition-all border border-slate-200 shadow-sm hover:shadow"
             >
-              <Play className="w-4 h-4 text-sportsGreen fill-sportsGreen" />
-              <span>See How It Works</span>
-            </a>
+              <Sparkles className="w-4 h-4 text-sportsGreen" />
+              <span>Try 1-Click Demo Profiles</span>
+            </button>
           </div>
 
           {/* Quick Sport Selector Bar */}
-          <div className="pt-4 border-t border-slate-200/80">
-            <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-              Supported Multi-Sport Ecosystem
+          <div className="pt-6 border-t border-slate-200/80">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3.5">
+              Select a Sport to Filter Discovery
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
               {SPORTS_LIST.map((sport) => (
                 <button
                   key={sport.id}
@@ -106,11 +105,11 @@ export default function Hero({ onSelectSport }) {
                     if (onSelectSport) onSelectSport(sport.id);
                     handleScrollTo('#discovery-demo');
                   }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-slate-100/80 border border-slate-200 text-sm font-semibold text-navy-800 shadow-sm hover:shadow transition-all group active:scale-95"
+                  className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-white hover:bg-slate-100/90 border border-slate-200 text-xs sm:text-sm font-semibold text-navy-800 shadow-xs hover:shadow transition-all group active:scale-95"
                 >
                   <span className="text-base group-hover:scale-125 transition-transform">{sport.icon}</span>
                   <span>{sport.name}</span>
-                  <span className="hidden md:inline-block text-[11px] text-slate-400 font-normal group-hover:text-sportsGreen-600">
+                  <span className="hidden lg:inline text-[10px] text-slate-400 font-normal group-hover:text-sportsGreen-700">
                     • {sport.badge}
                   </span>
                 </button>
@@ -120,51 +119,51 @@ export default function Hero({ onSelectSport }) {
         </div>
 
         {/* Floating Identity & Discovery Preview Cards */}
-        <div className="mt-14 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="mt-12 sm:mt-14 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
           {/* Card 1 */}
-          <div className="bg-white/90 backdrop-blur rounded-2xl p-5 border border-slate-200/80 shadow-card hover:shadow-elevated transition-all flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-sportsGreen-50 border border-sportsGreen-100 flex items-center justify-center text-sportsGreen-600 shrink-0">
-              <Users className="w-6 h-6" />
+          <div className="bg-white/90 backdrop-blur rounded-3xl p-5 border border-slate-200/80 shadow-card hover:shadow-elevated transition-all flex items-start gap-4">
+            <div className="w-11 h-11 rounded-2xl bg-sportsGreen-50 border border-sportsGreen-100 flex items-center justify-center text-sportsGreen-600 shrink-0 shadow-xs">
+              <Users className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-sportsGreen-600 uppercase tracking-wider">Universal Identity</span>
-              </div>
-              <h3 className="text-base font-bold text-navy-900 mt-0.5">One Profile for Every Sport</h3>
+              <span className="text-[11px] font-extrabold text-sportsGreen-600 uppercase tracking-wider">
+                Universal Identity
+              </span>
+              <h3 className="text-sm sm:text-base font-bold text-navy-900 mt-0.5">One Profile for Every Sport</h3>
               <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                Adaptive sports traits without juggling 5 different apps or outdated bio notes.
+                Adaptive sports traits without juggling 5 different apps or unsearchable notes.
               </p>
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="bg-white/90 backdrop-blur rounded-2xl p-5 border border-slate-200/80 shadow-card hover:shadow-elevated transition-all flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-              <MapPin className="w-6 h-6" />
+          <div className="bg-white/90 backdrop-blur rounded-3xl p-5 border border-slate-200/80 shadow-card hover:shadow-elevated transition-all flex items-start gap-4">
+            <div className="w-11 h-11 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0 shadow-xs">
+              <MapPin className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Hyper-Local</span>
-              </div>
-              <h3 className="text-base font-bold text-navy-900 mt-0.5">Discover Nearby Matches</h3>
+              <span className="text-[11px] font-extrabold text-blue-600 uppercase tracking-wider">
+                Hyper-Local Radius
+              </span>
+              <h3 className="text-sm sm:text-base font-bold text-navy-900 mt-0.5">Discover Nearby Matches</h3>
               <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                Find compatible players and courts within 2 to 5 km of your location.
+                Find compatible players, net sessions, and courts within 2 to 5 km of your location.
               </p>
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="bg-white/90 backdrop-blur rounded-2xl p-5 border border-slate-200/80 shadow-card hover:shadow-elevated transition-all flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-sportsOrange-50 border border-sportsOrange-100 flex items-center justify-center text-sportsOrange-600 shrink-0">
-              <Award className="w-6 h-6" />
+          <div className="bg-white/90 backdrop-blur rounded-3xl p-5 border border-slate-200/80 shadow-card hover:shadow-elevated transition-all flex items-start gap-4 sm:col-span-2 md:col-span-1">
+            <div className="w-11 h-11 rounded-2xl bg-sportsOrange-50 border border-sportsOrange-100 flex items-center justify-center text-sportsOrange-600 shrink-0 shadow-xs">
+              <Award className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-sportsOrange-600 uppercase tracking-wider">Direct Access</span>
-              </div>
-              <h3 className="text-base font-bold text-navy-900 mt-0.5">From Search to Court</h3>
+              <span className="text-[11px] font-extrabold text-sportsOrange-600 uppercase tracking-wider">
+                Frictionless Access
+              </span>
+              <h3 className="text-sm sm:text-base font-bold text-navy-900 mt-0.5">From Search to Court</h3>
               <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                Seamless 1-click connection for practice sessions, pickups, and tournaments.
+                Instant 1-click connection for practice sessions, pickups, and local tournaments.
               </p>
             </div>
           </div>
@@ -173,3 +172,4 @@ export default function Hero({ onSelectSport }) {
     </section>
   );
 }
+

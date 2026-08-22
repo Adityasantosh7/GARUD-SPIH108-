@@ -15,10 +15,16 @@ import {
   Zap,
   CheckCircle,
   Tag,
-  Clock
+  Clock,
+  PlusCircle,
+  X,
+  Check
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModal }) {
+  const { user, isAuthenticated, openAuthModal, addNotification } = useAuth();
+
   const [activeSportFilter, setActiveSportFilter] = useState(selectedSport || 'all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [filterType, setFilterType] = useState('all'); // 'all' | 'athlete' | 'event'
@@ -28,6 +34,20 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
   const [searchQuery, setSearchQuery] = useState('');
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
+  // Dynamic custom user posts added during session
+  const [customItems, setCustomItems] = useState([]);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [postFormData, setPostFormData] = useState({
+    type: 'event',
+    title: '',
+    sport: 'cricket',
+    skillLevel: 'Intermediate',
+    area: 'Gachibowli, Hyderabad',
+    schedule: 'Saturday • 7:00 AM',
+    description: 'Looking for 4 more players for a competitive turf match.',
+    maxSpots: 10
+  });
+
   // Sync external sport selection
   React.useEffect(() => {
     if (selectedSport) {
@@ -35,9 +55,13 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
     }
   }, [selectedSport]);
 
+  const allItems = useMemo(() => {
+    return [...customItems, ...MOCK_DISCOVERY_ITEMS];
+  }, [customItems]);
+
   // Filter and Sort Engine
   const filteredAndSortedItems = useMemo(() => {
-    let result = MOCK_DISCOVERY_ITEMS.filter((item) => {
+    let result = allItems.filter((item) => {
       // 1. Sport filter
       if (activeSportFilter !== 'all' && item.sport !== activeSportFilter) {
         return false;
@@ -69,8 +93,8 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
       // 6. Search query filter
       if (searchQuery.trim() !== '') {
         const q = searchQuery.toLowerCase().replace(/^[⚡🏸🏏⚽🏃🏊♟️📍]\s*/, '');
-        const matchesName = item.name.toLowerCase().includes(q);
-        const matchesSport = item.sportLabel.toLowerCase().includes(q);
+        const matchesName = (item.name || item.title || '').toLowerCase().includes(q);
+        const matchesSport = (item.sportLabel || '').toLowerCase().includes(q);
         const matchesSkill = (item.skillLevel || '').toLowerCase().includes(q);
         const matchesArea = (item.area || '').toLowerCase().includes(q);
         const matchesLookingFor = (item.lookingFor || item.description || '').toLowerCase().includes(q);
@@ -100,6 +124,7 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
 
     return result;
   }, [
+    allItems,
     activeSportFilter,
     filterType,
     selectedLocation,
@@ -125,6 +150,45 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
     if (onSelectSport) onSelectSport('all');
   };
 
+  const handleCreatePost = (e) => {
+    e.preventDefault();
+    const sportObj = SPORTS_LIST.find((s) => s.id === postFormData.sport) || SPORTS_LIST[0];
+
+    const newItem = {
+      id: `custom-${Date.now()}`,
+      type: postFormData.type,
+      name: postFormData.title,
+      title: postFormData.title,
+      sport: postFormData.sport,
+      sportLabel: sportObj.name,
+      sportIcon: sportObj.icon,
+      skillLevel: postFormData.skillLevel,
+      location: 'Hyderabad',
+      area: postFormData.area,
+      distanceNum: 1.2,
+      distance: '1.2 km away',
+      matchScore: 99,
+      schedule: postFormData.schedule,
+      day: postFormData.schedule.split('•')[0]?.trim() || 'Weekend',
+      participantsCount: 1,
+      maxSpots: postFormData.maxSpots,
+      spotsRemaining: postFormData.maxSpots - 1,
+      description: postFormData.description,
+      lookingFor: postFormData.description,
+      tags: ['Community Hosted', `${sportObj.name}`, 'Verified'],
+      sportSpecific: {
+        'Organizer': user ? user.name : 'Verified Member',
+        'Skill Recommended': postFormData.skillLevel,
+        'Location Hub': postFormData.area,
+        'Session Type': postFormData.type === 'event' ? 'Pickup Game' : 'Sparring Partner'
+      }
+    };
+
+    setCustomItems((prev) => [newItem, ...prev]);
+    setIsPostModalOpen(false);
+    addNotification('New Listing Created', `"${newItem.name}" is now live on SportSphere discovery!`);
+  };
+
   const hasActiveFilters =
     activeSportFilter !== 'all' ||
     selectedLocation !== 'all' ||
@@ -134,33 +198,33 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
     searchQuery.trim() !== '';
 
   return (
-    <section id="discovery-demo" className="py-20 bg-slate-100/70 border-b border-slate-200/80 relative">
+    <section id="discovery-demo" className="py-16 sm:py-20 bg-slate-100/70 border-b border-slate-200/80 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sportsOrange-50 text-sportsOrange-700 text-xs font-bold uppercase tracking-wider mb-4 border border-sportsOrange-200">
+        <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sportsOrange-50 text-sportsOrange-700 text-xs font-bold uppercase tracking-wider mb-3.5 border border-sportsOrange-200">
             <Sparkles className="w-3.5 h-3.5" />
-            Live Search & Discovery Engine
+            Live Search & Multi-Sport Discovery
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-navy-900 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-navy-900 tracking-tight">
             Discover What's Around You
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed">
+          <p className="mt-2.5 text-sm sm:text-base md:text-lg text-slate-600 leading-relaxed px-2">
             Find active athletes, sparring partners, and nearby pickup games matched to your exact sport and radius.
           </p>
         </div>
 
         {/* Popular Quick Search Tags */}
-        <div className="max-w-5xl mx-auto mb-6 flex items-center justify-center flex-wrap gap-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline">
+        <div className="max-w-5xl mx-auto mb-6 flex items-center justify-start sm:justify-center overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap gap-2 px-2">
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline shrink-0">
             Quick Searches:
           </span>
           {POPULAR_SEARCH_TAGS.map((tag) => (
             <button
               key={tag}
               onClick={() => setSearchQuery(tag)}
-              className={`text-xs font-semibold px-3 py-1.5 rounded-full transition-all active:scale-95 ${
+              className={`text-xs font-semibold px-3 py-1.5 rounded-full transition-all active:scale-95 whitespace-nowrap shrink-0 ${
                 searchQuery === tag
                   ? 'bg-navy-900 text-white shadow-sm'
                   : 'bg-white hover:bg-slate-50 text-slate-600 border border-slate-200/80 shadow-xs'
@@ -172,19 +236,19 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
         </div>
 
         {/* Discovery Control Panel */}
-        <div className="bg-white rounded-3xl p-5 sm:p-7 shadow-card border border-slate-200/90 mb-8 space-y-5 max-w-6xl mx-auto">
+        <div className="bg-white rounded-3xl p-4 sm:p-7 shadow-card border border-slate-200/90 mb-8 space-y-4 sm:space-y-5 max-w-6xl mx-auto">
           
-          {/* Main Search & Location Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5">
+          {/* Main Search, Location, Filter & Post Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
             {/* Search Input */}
-            <div className="sm:col-span-5 relative">
+            <div className="sm:col-span-4 relative">
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by player name, skill, format, or court..."
-                className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-sm text-navy-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sportsGreen/40 focus:bg-white transition-all font-medium"
+                placeholder="Search players, format, skill, or turf..."
+                className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-xs sm:text-sm text-navy-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sportsGreen/40 focus:bg-white transition-all font-medium"
               />
               {searchQuery && (
                 <button
@@ -202,7 +266,7 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-sm text-navy-900 font-semibold focus:outline-none focus:ring-2 focus:ring-sportsGreen/40 focus:bg-white transition-all appearance-none cursor-pointer"
+                className="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-xs sm:text-sm text-navy-900 font-semibold focus:outline-none focus:ring-2 focus:ring-sportsGreen/40 focus:bg-white transition-all appearance-none cursor-pointer"
               >
                 <option value="all">📍 All Hyderabad Hubs</option>
                 <option value="Gachibowli">📍 Gachibowli</option>
@@ -218,7 +282,7 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
             </div>
 
             {/* Type Filter Buttons */}
-            <div className="sm:col-span-2 flex rounded-xl bg-slate-100 p-1 border border-slate-200">
+            <div className="sm:col-span-3 flex rounded-xl bg-slate-100 p-1 border border-slate-200">
               <button
                 onClick={() => setFilterType('all')}
                 className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
@@ -251,28 +315,28 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
               </button>
             </div>
 
-            {/* Advanced Filters Toggle Button */}
-            <div className="sm:col-span-2">
+            {/* Advanced Filters Button */}
+            <div className="sm:col-span-2 flex gap-2">
               <button
                 onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                className={`w-full py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border transition-all ${
+                className={`w-full py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border transition-all ${
                   showAdvancedFilters
                     ? 'bg-navy-900 text-white border-navy-900 shadow-sm'
                     : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200'
                 }`}
               >
                 <SlidersHorizontal className="w-3.5 h-3.5 text-sportsGreen" />
-                <span>{showAdvancedFilters ? 'Hide Filters' : 'More Filters'}</span>
+                <span>{showAdvancedFilters ? 'Hide' : 'Filters'}</span>
               </button>
             </div>
           </div>
 
           {/* Advanced Multi-Dimension Filters Drawer */}
           {showAdvancedFilters && (
-            <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-4 animate-fade-in bg-slate-50/60 p-4 rounded-2xl border">
+            <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-3.5 animate-fade-in bg-slate-50/60 p-4 rounded-2xl border border-slate-200/80">
               {/* Skill Level */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
                   Skill Level
                 </label>
                 <select
@@ -289,7 +353,7 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
 
               {/* Distance Radius */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
                   Maximum Distance
                 </label>
                 <select
@@ -306,7 +370,7 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
 
               {/* Sort By */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
                   Sort Results By
                 </label>
                 <select
@@ -322,28 +386,37 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
             </div>
           )}
 
-          {/* Sport Filter Pill Buttons */}
+          {/* Sport Filter Buttons & Host Listing Action */}
           <div>
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-2.5 flex-wrap gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 Filter by Sport:
               </span>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <button
+                  onClick={() => setIsPostModalOpen(true)}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 bg-sportsGreen-50 hover:bg-sportsGreen-100 border border-sportsGreen-200 px-3 py-1.5 rounded-xl transition-colors"
+                >
+                  <PlusCircle className="w-3.5 h-3.5 text-sportsGreen-700" />
+                  <span>Host Event / Post Listing</span>
+                </button>
+
                 {hasActiveFilters && (
                   <button
                     onClick={handleResetFilters}
                     className="inline-flex items-center gap-1 text-xs font-bold text-sportsOrange hover:text-sportsOrange-600 transition-colors"
                   >
                     <RotateCcw className="w-3 h-3" />
-                    <span>Reset All</span>
+                    <span>Reset</span>
                   </button>
                 )}
                 <span className="text-xs font-semibold text-slate-500">
-                  Showing <strong className="text-navy-900">{filteredAndSortedItems.length}</strong> matches
+                  <strong className="text-navy-900">{filteredAndSortedItems.length}</strong> results
                 </span>
               </div>
             </div>
             
+            {/* Scrollable / wrap sports pills */}
             <div className="flex flex-wrap gap-2">
               {sportsFilterButtons.map((btn) => {
                 const isActive = activeSportFilter === btn.id;
@@ -354,7 +427,7 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
                       setActiveSportFilter(btn.id);
                       if (onSelectSport) onSelectSport(btn.id);
                     }}
-                    className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all active:scale-95 ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all active:scale-95 ${
                       isActive
                         ? 'bg-navy-900 text-white shadow-md shadow-navy-900/20 ring-2 ring-navy-900/10'
                         : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200/80 hover:border-slate-300'
@@ -375,7 +448,7 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
 
         {/* Results Grid */}
         {filteredAndSortedItems.length === 0 ? (
-          <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 max-w-lg mx-auto shadow-sm">
+          <div className="bg-white rounded-3xl p-10 sm:p-12 text-center border border-slate-200 max-w-lg mx-auto shadow-sm">
             <div className="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4 text-2xl">
               🔍
             </div>
@@ -391,14 +464,14 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-6xl mx-auto">
             {filteredAndSortedItems.map((item) => {
               const isAthlete = item.type === 'athlete';
 
               return (
                 <div
                   key={item.id}
-                  className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-card hover:shadow-elevated transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 relative overflow-hidden"
+                  className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-card hover:shadow-elevated transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 relative overflow-hidden"
                 >
                   {/* Top Match Score Pill */}
                   <div className="flex items-center justify-between mb-3">
@@ -415,13 +488,13 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
 
                   <div>
                     {/* Card Header */}
-                    <div className="flex items-start gap-3.5 mb-3">
-                      <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-2xl shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-11 h-11 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-xl shrink-0 shadow-sm group-hover:scale-105 transition-transform">
                         {item.sportIcon}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
-                          <h3 className="text-lg font-black text-navy-900 group-hover:text-sportsGreen-700 transition-colors truncate">
+                          <h3 className="text-base sm:text-lg font-black text-navy-900 group-hover:text-sportsGreen-700 transition-colors truncate">
                             {item.name}
                           </h3>
                         </div>
@@ -473,7 +546,7 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
                               {item.schedule || item.day}
                             </span>
                             <span className="font-bold text-sportsGreen-700 bg-sportsGreen-50 px-2 py-0.5 rounded-md border border-sportsGreen-100 text-[11px]">
-                              👥 {item.participantsCount} Participants
+                              👥 {item.participantsCount} Joined
                             </span>
                           </div>
                           <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
@@ -502,10 +575,10 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
                   </div>
 
                   {/* Card Action Button */}
-                  <div className="pt-4 border-t border-slate-100 mt-2">
+                  <div className="pt-3.5 border-t border-slate-100 mt-2">
                     <button
                       onClick={() => onOpenModal(item)}
-                      className={`w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm ${
+                      className={`w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-xs ${
                         isAthlete
                           ? 'bg-navy-900 text-white hover:bg-navy-800 group-hover:shadow-md'
                           : 'bg-sportsOrange text-white hover:bg-sportsOrange-600 group-hover:shadow-md'
@@ -532,6 +605,157 @@ export default function DiscoveryDemo({ selectedSport, onSelectSport, onOpenModa
         )}
 
       </div>
+
+      {/* Host Event / Post Listing Modal */}
+      {isPostModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm animate-fade-in">
+          <div
+            className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-slide-up max-h-[90vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-5 sm:p-6 bg-gradient-to-r from-navy-950 to-navy-900 text-white flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2.5">
+                <PlusCircle className="w-5 h-5 text-sportsGreen" />
+                <h3 className="text-lg font-bold">Host Match / Post Discovery Listing</h3>
+              </div>
+              <button
+                onClick={() => setIsPostModalOpen(false)}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreatePost} className="p-5 sm:p-6 overflow-y-auto space-y-3.5 flex-1 text-slate-700">
+              {/* Type Switch */}
+              <div className="flex rounded-xl bg-slate-100 p-1 border border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setPostFormData({ ...postFormData, type: 'event' })}
+                  className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                    postFormData.type === 'event' ? 'bg-white text-navy-900 shadow-sm' : 'text-slate-600'
+                  }`}
+                >
+                  🏆 Host Pickup Match / Event
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPostFormData({ ...postFormData, type: 'athlete' })}
+                  className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                    postFormData.type === 'athlete' ? 'bg-white text-navy-900 shadow-sm' : 'text-slate-600'
+                  }`}
+                >
+                  👤 Post "Looking for Partner"
+                </button>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Listing Title / Headline
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder={postFormData.type === 'event' ? 'e.g. Saturday Morning Turf 7v7 Clash' : 'e.g. Looking for Singles Badminton Sparring Partner'}
+                  value={postFormData.title}
+                  onChange={(e) => setPostFormData({ ...postFormData, title: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-sportsGreen/40"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Sport
+                  </label>
+                  <select
+                    value={postFormData.sport}
+                    onChange={(e) => setPostFormData({ ...postFormData, sport: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold text-navy-900 bg-white"
+                  >
+                    {SPORTS_LIST.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.icon} {s.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Skill Level
+                  </label>
+                  <select
+                    value={postFormData.skillLevel}
+                    onChange={(e) => setPostFormData({ ...postFormData, skillLevel: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold text-navy-900 bg-white"
+                  >
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Location / Venue (e.g. Gachibowli Indoor Arena)
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={postFormData.area}
+                  onChange={(e) => setPostFormData({ ...postFormData, area: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-sportsGreen/40"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Day & Time Schedule
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Saturday • 6:30 AM - 8:30 AM"
+                  value={postFormData.schedule}
+                  onChange={(e) => setPostFormData({ ...postFormData, schedule: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-sportsGreen/40"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Description & What to Bring
+                </label>
+                <textarea
+                  rows={2}
+                  value={postFormData.description}
+                  onChange={(e) => setPostFormData({ ...postFormData, description: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-sportsGreen/40"
+                />
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setIsPostModalOpen(false)}
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs font-bold shadow-md"
+                >
+                  Publish Listing Live
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
+
