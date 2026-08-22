@@ -2,7 +2,7 @@
 
 > **One Platform. Every Sport. Every Athlete.**  
 > **Team:** GARUD  
-> **Submission:** Round 3 Hackathon Landing Page & Interactive Discovery Prototype
+> **Submission:** Round 3 Hackathon Landing Page, Social Auth & Athlete Profile Dashboard
 
 ---
 
@@ -39,10 +39,12 @@ $$\text{PROFILE} \longrightarrow \text{DISCOVER} \longrightarrow \text{CONNECT} 
 
 ## ✨ 3. Key Features
 
+- 🔐 **Multi-Platform Authentication:** One-click login with **Google**, **Apple ID**, or custom **Email Athlete Registration**.
+- 👤 **Dedicated Athlete Profile Dashboard:** Full athlete identity manager with reliability scores, match counts, multi-sport cross-training badges, and joined events tracker.
+- ✏️ **Live Sport Identity Editor:** Real-time profile customization with adaptive schema fields persisted to `localStorage`.
 - 🏏 **Multi-Sport Support (6 Sports Core):** Cricket, Football, Badminton, Swimming, Athletics, Chess.
 - 🔍 **Interactive Discovery Engine:** Real-time filtering by sport category, Hyderabad locality hubs, and item type (Athletes vs Events).
-- 👤 **Sport-Adaptive Profile Previews:** Lightweight modals displaying sport-specific attributes, availability, and goals.
-- ⚡ **Instant Action Feedback:** Simulated "Connect" and "Join Event" flows with non-intrusive notification toasts.
+- ⚡ **Instant Action Feedback:** Simulated "Connect" and "Join Event" flows with non-intrusive notification toasts that link directly to the user's joined events dashboard.
 - 📊 **From Fragmented to Connected Comparison:** Clear side-by-side breakdown contrasting today's broken WhatsApp loops against SportSphere.
 - 🌟 **Design & Visual Psychology:** Built with a professional sports-tech palette — **Deep Navy** (Trust & Stability), **Emerald Green** (Growth & Energy), and **Accent Orange** (Action CTAs).
 - 📱 **100% Responsive Design:** Flawless layout across mobile, tablet, laptop, and ultra-wide desktop screens.
@@ -55,7 +57,7 @@ $$\text{PROFILE} \longrightarrow \text{DISCOVER} \longrightarrow \text{CONNECT} 
 - **Build Tool:** Vite 6
 - **Styling:** Tailwind CSS 3
 - **Icons:** Lucide React
-- **Architecture:** Zero backend dependency for MVP — High-performance client-side state & mock dataset.
+- **State & Storage:** React Context + LocalStorage Persistence for zero-backend speed.
 
 ---
 
