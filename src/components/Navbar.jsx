@@ -80,10 +80,10 @@ export default function Navbar({ currentView, onNavigate, onOpenDemo }) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Brand Logo */}
+          {/* Brand Logo - Clean with only icon and SportSphere */}
           <a
             href="#"
-            className="flex items-center gap-3 group focus:outline-none"
+            className="flex items-center gap-2.5 group focus:outline-none"
             onClick={(e) => {
               e.preventDefault();
               onNavigate('landing');
@@ -93,19 +93,9 @@ export default function Navbar({ currentView, onNavigate, onOpenDemo }) {
             <div className="w-10 h-10 rounded-xl bg-navy-900 flex items-center justify-center text-sportsGreen transition-transform group-hover:scale-105 shadow-md shadow-navy-900/10">
               <Activity className="w-5 h-5 text-sportsGreen" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-extrabold tracking-tight text-navy-900">
-                  Sport<span className="text-sportsGreen">Sphere</span>
-                </span>
-                <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-navy-700 border border-slate-200">
-                  Team GARUD
-                </span>
-              </div>
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest -mt-1 hidden sm:block">
-                Round 3 Hackathon
-              </p>
-            </div>
+            <span className="text-2xl font-extrabold tracking-tight text-navy-900">
+              Sport<span className="text-sportsGreen">Sphere</span>
+            </span>
           </a>
 
           {/* Desktop Nav Links */}
@@ -251,13 +241,6 @@ export default function Navbar({ currentView, onNavigate, onOpenDemo }) {
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-3 p-4 bg-white rounded-2xl shadow-xl border border-slate-100 flex flex-col gap-3 animate-slide-up">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Navigation</span>
-              <span className="text-xs font-bold text-sportsGreen bg-sportsGreen-50 px-2 py-0.5 rounded-full border border-sportsGreen-100">
-                Team GARUD
-              </span>
-            </div>
-
             {isAuthenticated && user && (
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">

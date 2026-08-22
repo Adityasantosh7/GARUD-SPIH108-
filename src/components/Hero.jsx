@@ -31,9 +31,9 @@ export default function Hero({ onSelectSport }) {
           {/* Top Pill */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white shadow-sm border border-slate-200 text-xs font-semibold text-navy-800 mb-8 animate-fade-in">
             <span className="flex h-2 w-2 rounded-full bg-sportsGreen animate-pulse"></span>
-            <span className="font-bold text-navy-900">Team GARUD</span>
+            <span className="font-bold text-navy-900">Unified Multi-Sport Ecosystem</span>
             <span className="text-slate-300">•</span>
-            <span className="text-slate-600">Round 3 Hackathon Submission</span>
+            <span className="text-slate-600">Local Athletes & Matches</span>
             <Sparkles className="w-3.5 h-3.5 text-sportsOrange" />
           </div>
 
